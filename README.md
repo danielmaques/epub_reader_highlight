@@ -36,13 +36,17 @@ Aqui estão algumas capturas de tela do EPub Reader Highlight em ação:
 
 ### Destaque de Texto
 
-<img src="images/image1.png" alt="Destaque de Texto" width="250"/>
-<img src="images/image2.png" alt="Destaque de Texto" width="250"/>
+<p>
+    <img src="images/image1.png" alt="Destaque de Texto" width="250"/>
+    <img src="images/image2.png" alt="Destaque de Texto" width="250"/>
+</p>
 
 ### Lista de Capítulos
 
-<img src="images/image3.png" alt="Lista de Capítulos" width="250"/>
-<img src="images/image4.png" alt="Lista de Capítulos" width="250"/>
+<p>
+    <img src="images/image3.png" alt="Lista de Capítulos" width="250"/>
+    <img src="images/image4.png" alt="Lista de Capítulos" width="250"/>
+</p>
 
 ### Gerenciamento de Destaques
 
@@ -130,11 +134,11 @@ class _MainAppState extends State<MainApp> {
     );
   }
 }
-
 ```
 
 - **Destaque de Texto:** Para destacar um trecho, basta selecionar o texto desejado e escolher uma cor de destaque.
 - **Navegação entre Capítulos:** Utilize o menu de capítulos para navegar facilmente pelo livro.
+
 ```dart
     EpubViewTableOfContents(
         controller: _epubReaderController,
