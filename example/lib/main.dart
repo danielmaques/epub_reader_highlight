@@ -1,4 +1,6 @@
 import 'package:epub_reader_highlight/epub_reader_highlight.dart';
+import 'package:epub_reader_highlight/ui/actual_chapter.dart';
+import 'package:epub_reader_highlight/ui/table_of_contents.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,6 +34,20 @@ class _MainAppState extends State<MainApp> {
           bottom: false,
           child: Scaffold(
             backgroundColor: Colors.white,
+            appBar: AppBar(
+              title: EpubViewActualChapter(
+                controller: _epubReaderController,
+                builder: (chapterValue) => Text(
+                  'Chapter: ${chapterValue?.chapter?.Title?.replaceAll('\n', '').trim() ?? ''}',
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ),
+            drawer: Drawer(
+              child: EpubViewTableOfContents(
+                controller: _epubReaderController,
+              ),
+            ),
             body: EpubView(
               builders: EpubViewBuilders<DefaultBuilderOptions>(
                 options: const DefaultBuilderOptions(
