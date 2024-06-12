@@ -36,17 +36,17 @@ Aqui estão algumas capturas de tela do EPub Reader Highlight em ação:
 
 ### Destaque de Texto
 
-<img src="images/image1.png" alt="Destaque de Texto" width="300"/>
-<img src="images/image2.png" alt="Destaque de Texto" width="300"/>
+<img src="images/image1.png" alt="Destaque de Texto" width="250"/>
+<img src="images/image2.png" alt="Destaque de Texto" width="250"/>
 
 ### Lista de Capítulos
 
-<img src="images/image3.png" alt="Lista de Capítulos" width="300"/>
-<img src="images/image4.png" alt="Lista de Capítulos" width="300"/>
+<img src="images/image3.png" alt="Lista de Capítulos" width="250"/>
+<img src="images/image4.png" alt="Lista de Capítulos" width="250"/>
 
 ### Gerenciamento de Destaques
 
-<img src="images/highlight_management.png" alt="Gerenciamento de Destaques" width="600"/>
+<img src="images/highlight_management.png" alt="Gerenciamento de Destaques" width="250"/>
 
 ## Como Usar
 
