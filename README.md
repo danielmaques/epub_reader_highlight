@@ -4,76 +4,76 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/danielmaques/epub_reader_highlight.svg?style=social&label=Star)](https://github.com/danielmaques/epub_reader_highlight)
 
-## Sumário
+## Table of Contents
 
-- [Descrição](#descrição)
-- [Funcionalidades](#funcionalidades)
-- [Capturas de Tela](#capturas-de-tela)
-  - [Destaque de Texto](#destaque-de-texto)
-  - [Lista de Capítulos](#lista-de-capítulos)
-  - [Gerenciamento de Destaques](#gerenciamento-de-destaques)
-- [Como Usar](#como-usar)
-  - [Instalação](#instalação)
-  - [Exemplos de Uso](#exemplos-de-uso)
-- [Contribuindo](#contribuindo)
-- [Agradecimentos](#agradecimentos)
-- [Licença](#licença)
+- [Description](#description)
+- [Features](#features)
+- [Screenshots](#screenshots)
+  - [Text Highlight](#text-highlight)
+  - [Chapter List](#chapter-list)
+  - [Highlight Management](#highlight-management)
+- [Usage](#usage)
+  - [Installation](#installation)
+  - [Usage Examples](#usage-examples)
+- [Contributing](#contributing)
+- [Acknowledgements](#acknowledgements)
+- [License](#license)
 
-## Descrição
+## Description
 
-O EPub Reader Highlight é um aplicativo desenvolvido em Flutter que oferece uma solução completa para leitura de livros no formato Epub. Com uma interface intuitiva e recursos avançados, esta ferramenta permite aos desenvolvedores criar experiências de leitura personalizadas e eficientes para seus usuários.
+EPub Reader Highlight is a Flutter application that offers a complete solution for reading books in the Epub format. With an intuitive interface and advanced features, this tool allows developers to create personalized and efficient reading experiences for their users.
 
-## Funcionalidades
+## Features
 
-- **Destaque de Texto:** Selecione trechos importantes do livro e aplique diferentes cores de destaque para facilitar a revisão e organização do conteúdo.
-- **Lista de Capítulos:** Navegue facilmente entre os capítulos do livro, visualizando o título e o número de cada um.
-- **Gerenciamento de Destaques:** Acesse uma lista organizada de todos os destaques adicionados, com a opção de filtrar por cor ou capítulo.
-- **Interface Personalizável:** Adapte a aparência do leitor às suas preferências, com opções para ajustar o tamanho da fonte, espaçamento entre linhas e modo de leitura.
+- **Text Highlight:** Select important excerpts from the book and apply different highlight colors to facilitate review and organization of the content.
+- **Chapter List:** Easily navigate between the book's chapters, viewing the title and number of each one.
+- **Highlight Management:** Access an organized list of all added highlights, with the option to filter by color or chapter.
+- **Customizable Interface:** Adapt the reader's appearance to your preferences, with options to adjust font size, line spacing, and reading mode.
 
-## Capturas de Tela
+## Screenshots
 
-Aqui estão algumas capturas de tela do EPub Reader Highlight em ação:
+Here are some screenshots of EPub Reader Highlight in action:
 
-### Destaque de Texto
-
-<p>
-    <img src="images/image1.png" alt="Destaque de Texto" width="250"/>
-    <img src="images/image2.png" alt="Destaque de Texto" width="250"/>
-</p>
-
-### Lista de Capítulos
+### Text Highlight
 
 <p>
-    <img src="images/image3.png" alt="Lista de Capítulos" width="250"/>
-    <img src="images/image4.png" alt="Lista de Capítulos" width="250"/>
+    <img src="images/image1.png" alt="Text Highlight" width="250"/>
+    <img src="images/image2.png" alt="Text Highlight" width="250"/>
 </p>
 
-### Gerenciamento de Destaques
+### Chapter List
 
-<img src="images/highlight_management.png" alt="Gerenciamento de Destaques" width="250"/>
+<p>
+    <img src="images/image3.png" alt="Chapter List" width="250"/>
+    <img src="images/image4.png" alt="Chapter List" width="250"/>
+</p>
 
-## Como Usar
+### Highlight Management
 
-### Instalação
+<img src="images/highlight_management.png" alt="Highlight Management" width="250"/>
 
-1. Clone o repositório:
+## Usage
+
+### Installation
+
+1. Clone the repository:
    ```sh
    git clone https://github.com/danielmaques/epub_reader_highlight.git
    ```
-2. Navegue até o diretório do projeto:
+2. Navigate to the project directory:
    ```sh
    cd epub_reader_highlight
    ```
-3. Instale as dependências:
+3. Install the dependencies:
    ```sh
    flutter pub get
    ```
-4. Execute o aplicativo:
+4. Run the application:
    ```sh
    flutter run
    ```
 
-### Exemplos de Uso
+### Usage Examples
 
 ```dart
 class _MainAppState extends State<MainApp> {
@@ -136,38 +136,38 @@ class _MainAppState extends State<MainApp> {
 }
 ```
 
-- **Destaque de Texto:** Para destacar um trecho, basta selecionar o texto desejado e escolher uma cor de destaque.
-- **Navegação entre Capítulos:** Utilize o menu de capítulos para navegar facilmente pelo livro.
+- **Text Highlight:** To highlight a section, simply select the desired text and choose a highlight color.
+- **Chapter Navigation:** Use the chapter menu to easily navigate through the book.
 
 ```dart
     EpubViewTableOfContents(
         controller: _epubReaderController,
     ),
 ```
-- **Personalização da Interface:** Acesse as configurações do aplicativo para ajustar a fonte, o espaçamento e o modo de leitura.
+- **Interface Customization:** Access the app settings to adjust the font, spacing, and reading mode.
 
-## Contribuindo
+## Contributing
 
-Contribuições são o que fazem a comunidade de código aberto ser um lugar incrível para aprender, inspirar e criar. Qualquer contribuição que você fizer será **muito apreciada**.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-Se você tiver uma sugestão para melhorar o projeto, por favor, faça um fork do repositório e crie um pull request. Você também pode simplesmente abrir uma issue com a tag apropriada. Não se esqueça de dar uma estrela ao projeto! Muito obrigado!
+If you have a suggestion to improve this project, please fork the repository and create a pull request. You can also simply open an issue with the appropriate tag. Don't forget to give the project a star! Thank you very much!
 
-1. Faça um Fork do Projeto
-2. Crie uma Branch para sua Feature (`git checkout -b feature/AmazingFeature`)
-3. Comite suas Mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Faça o Push para a Branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Lembre-se de incluir uma tag e seguir as [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) e [Semantic Versioning](https://semver.org/) ao subir seu commit e/ou criar a issue.
+Be sure to include a tag and follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) and [Semantic Versioning](https://semver.org/) when submitting your commit and/or creating the issue.
 
-## Agradecimentos
+## Acknowledgements
 
-Obrigado a todas as pessoas que contribuíram para este projeto. Sem vocês, este projeto não seria possível.
+Thanks to all the people who have contributed to this project. Without you, this project would not be possible.
 
 <a href="https://github.com/danielmaques/epub_reader_highlight/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=danielmaques/epub_reader_highlight" />
 </a>
 
-## Licença
+## License
 
-Este projeto está licenciado sob a licença [MIT](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
