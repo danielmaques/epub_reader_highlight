@@ -10,16 +10,6 @@ class EpubCfiParser {
   late String input;
   String? startRule;
 
-  /*
-   * ECMA-262, 5th ed., 7.8.4: All characters may appear literally in a
-   * string literal except for the closing quote character, backslash,
-   * carriage return, line separator, paragraph separator, and line feed.
-   * Any character may appear in the form of an escape sequence.
-   *
-   * For portability, we also escape escape all control and non-ASCII
-   * characters. Note that "\0" and "\v" escape sequences are not used
-   * because JSHint does not like the first and IE the second.
-   */
   static String quote(String s) =>
       '"${s.replaceAll(RegExp(r'\\'), '\\\\') // backslash
           .replaceAll(RegExp(r'"'), '\\"') // closing quote character
@@ -72,30 +62,6 @@ class EpubCfiParser {
 
     final result = parseFunctions[startRule!]!();
 
-    /*
-       * The parser is now in one of the following three states:
-       *
-       * 1. The parser successfully parsed the whole input.
-       *
-       *    - |result != null|
-       *    - |pos == input.length|
-       *    - |rightmostFailuresExpected| may or may not contain something
-       *
-       * 2. The parser successfully parsed only a part of the input.
-       *
-       *    - |result != null|
-       *    - |pos < input.length|
-       *    - |rightmostFailuresExpected| may or may not contain something
-       *
-       * 3. The parser did not successfully parse any part of the input.
-       *
-       *   - |result == null|
-       *   - |pos == 0|
-       *   - |rightmostFailuresExpected| contains at least one failure
-       *
-       * All code following this comment (including called functions) must
-       * handle these states.
-       */
     if (result == null || pos != input.length) {
       final offset = max(pos, rightmostFailuresPos);
       final found = offset < input.length ? input[offset] : null;
@@ -712,7 +678,6 @@ class EpubCfiParser {
         }
       }
 
-      // added for parsing values like [2^[1^]], without ","
       result1 = result1 ?? '';
 
       // ignore: unnecessary_null_comparison

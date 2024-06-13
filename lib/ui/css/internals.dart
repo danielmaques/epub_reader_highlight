@@ -14,7 +14,7 @@ class _Tag {
 void defaultLinksCallback(String link) {}
 
 class Parser {
-  var _stack = [];
+  final _stack = [];
   var _events;
   late BuildContext _context;
   late Function _linksCallback;
@@ -28,12 +28,12 @@ class Parser {
 
   TextSpan _getTextSpan(text, style) {
     var rules = style.split(";").where((item) => !item.trim().isEmpty);
-    TextStyle textStyle = TextStyle();
-    textStyle = textStyle.apply(color: Color(0xff000000));
+    TextStyle textStyle = const TextStyle();
+    textStyle = textStyle.apply(color: const Color(0xff000000));
     var isLink = false;
     var link = "";
     rules.forEach((String rule) {
-      if (rule.indexOf(":") == -1) return;
+      if (!rule.contains(":")) return;
       final parts = rule.split(":");
       String name = parts[0].trim();
       String value = parts[1].trim();
@@ -86,11 +86,11 @@ class Parser {
 
   TextSpan _handleText(String text) {
     text = TextGenUtils.strip(text);
-    if (text.isEmpty) return TextSpan(text: "");
+    if (text.isEmpty) return const TextSpan(text: "");
     var style = "";
-    _stack.forEach((tag) {
+    for (var tag in _stack) {
       style += tag.styles + ";";
-    });
+    }
     return _getTextSpan(text, style);
   }
 
@@ -112,9 +112,7 @@ class Parser {
               event.name == 's') {
             styles = "text-decoration: line-through;";
           } else if (event.name == 'a') {
-            styles = "visit_link:__#TO_GET#__;" +
-                "text-decoration: underline;" +
-                " color: #0000ff";
+            styles = "visit_link:__#TO_GET#__;text-decoration: underline; color: #0000ff";
           }
 
           if (event.name == 'tgYellow') {
@@ -131,19 +129,19 @@ class Parser {
             styles = 'background:#DDA0DD';
           }
 
-          event.attributes.forEach((attribute) {
-            if (attribute.name == "style")
-              styles = styles + ";" + attribute.value;
-            else if (attribute.name == "href") {
+          for (var attribute in event.attributes) {
+            if (attribute.name == "style") {
+              styles = "$styles;${attribute.value}";
+            } else if (attribute.name == "href") {
               styles = styles.replaceFirst(r"__#TO_GET#__",
                   attribute.value.replaceAll(r":", "__#COLON#__"));
             }
-          });
+          }
 
           _stack.add(_Tag(event.name, styles));
         } else {
           if (event.name == "br") {
-            spans.add(TextSpan(text: "\n"));
+            spans.add(const TextSpan(text: "\n"));
           }
         }
       }
@@ -151,11 +149,10 @@ class Parser {
       if (event is xmle.XmlEndElementEvent) {
         var top = _stack.removeLast();
         if (top.name != event.name) {
-          print("Malformed HTML");
           return;
         }
         if (event.name == "p") {
-          spans.add(TextSpan(text: "\n"));
+          spans.add(const TextSpan(text: "\n"));
         }
       }
 
@@ -168,9 +165,9 @@ class Parser {
     });
 
     // for the last p tag
-    if (spans[spans.length - 1].text == '\n') {
-      spans.removeLast();
-    }
+    // if (spans[spans.length - 1].text == '\n') {
+    //   spans.removeLast();
+    // }
     return spans;
   }
 }

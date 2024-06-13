@@ -1,19 +1,14 @@
 part of '../ui/epub_view.dart';
 
 typedef EpubViewBuilder<T> = Widget Function(
-  /// Build context
   BuildContext context,
 
-  /// All passed builders
   EpubViewBuilders<T> builders,
 
-  /// Document loading state
   EpubViewLoadingState state,
 
-  /// Loaded result builder
   WidgetBuilder loadedBuilder,
 
-  /// Error of pdf loading
   Exception? loadingError,
 );
 
@@ -32,19 +27,15 @@ typedef ChaptersBuilder = Widget Function(
 typedef ChapterDividerBuilder = Widget Function(EpubChapter value);
 
 class EpubViewBuilders<T> {
-  /// Root view builder
   final EpubViewBuilder<T> builder;
 
   final ChaptersBuilder chapterBuilder;
   final ChapterDividerBuilder chapterDividerBuilder;
 
-  /// Widget showing when epub page loading
   final WidgetBuilder? loaderBuilder;
 
-  /// Show document loading error message inside [EpubView]
   final Widget Function(BuildContext, Exception error)? errorBuilder;
 
-  /// Additional options for builder
   final T options;
 
   const EpubViewBuilders({

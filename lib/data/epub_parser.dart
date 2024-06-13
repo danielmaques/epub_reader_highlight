@@ -52,7 +52,6 @@ ParseParagraphsResult parseParagraphs(
       }
 
       if (next.Anchor == null) {
-        // last element from document index as chapter index
         chapterIndexes.add(acc.length);
         acc.addAll(elmList
             .map((element) => Paragraph(element, chapterIndexes.length - 1)));

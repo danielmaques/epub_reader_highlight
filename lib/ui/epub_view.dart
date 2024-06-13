@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart' as html_parser;
 import 'package:flutter_html/flutter_html.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:universal_file/universal_file.dart';
@@ -348,12 +349,8 @@ class _EpubViewState extends State<EpubView> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-                  var highlightColor = const Color(0xFFFFFF00);
                   applyHighlight(
                     state: state,
-                    context: context,
-                    color: highlightColor,
-                    paragraph: paragraph,
                     index: index,
                     tag: 'tgYellow',
                   );
@@ -373,12 +370,8 @@ class _EpubViewState extends State<EpubView> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-                  var highlightColor = const Color(0xFF00FFFF);
                   applyHighlight(
                     state: state,
-                    context: context,
-                    color: highlightColor,
-                    paragraph: paragraph,
                     index: index,
                     tag: 'tgCyan',
                   );
@@ -398,12 +391,8 @@ class _EpubViewState extends State<EpubView> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-                  var highlightColor = const Color(0xFFFF69B4);
                   applyHighlight(
                     state: state,
-                    context: context,
-                    color: highlightColor,
-                    paragraph: paragraph,
                     index: index,
                     tag: 'tgPink',
                   );
@@ -423,12 +412,8 @@ class _EpubViewState extends State<EpubView> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-                  var highlightColor = const Color(0xFF90EE90);
                   applyHighlight(
                     state: state,
-                    context: context,
-                    color: highlightColor,
-                    paragraph: paragraph,
                     index: index,
                     tag: 'tgGreen',
                   );
@@ -448,12 +433,8 @@ class _EpubViewState extends State<EpubView> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-                  var highlightColor = const Color(0xFFFFA07A);
                   applyHighlight(
                     state: state,
-                    context: context,
-                    color: highlightColor,
-                    paragraph: paragraph,
                     index: index,
                     tag: 'tgOrange',
                   );
@@ -473,12 +454,8 @@ class _EpubViewState extends State<EpubView> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-                  var highlightColor = const Color(0xFFDDA0DD);
                   applyHighlight(
                     state: state,
-                    context: context,
-                    color: highlightColor,
-                    paragraph: paragraph,
                     index: index,
                     tag: 'tgLilac',
                   );
@@ -486,7 +463,7 @@ class _EpubViewState extends State<EpubView> {
                 child: Container(
                   width: 20,
                   height: 20,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xFFDDA0DD),
                     shape: BoxShape.circle,
                   ),
@@ -651,11 +628,8 @@ class _EpubViewState extends State<EpubView> {
 
   static void applyHighlight({
     required EditableTextState state,
-    required Color color,
-    required Paragraph paragraph,
     required String tag,
     required int index,
-    required BuildContext context,
   }) {
     String paragraphText = paragraphList.value[index];
     final selectedStartIndex = state.textEditingValue.selection.start;
@@ -673,6 +647,19 @@ class _EpubViewState extends State<EpubView> {
     paragraphText =
         paragraphText.replaceAll(initialTag, '').replaceAll(lastTag, '');
 
+    final spanStartTagRegExp = RegExp(r'^<span [^>]+>');
+    final spanEndTagRegExp = RegExp(r'</span>$');
+
+    final spanStartTagMatch = spanStartTagRegExp.firstMatch(paragraphText);
+    final spanEndTagMatch = spanEndTagRegExp.firstMatch(paragraphText);
+
+    final spanStartTag =
+    spanStartTagMatch != null ? spanStartTagMatch.group(0)! : '';
+    final spanEndTag = spanEndTagMatch != null ? spanEndTagMatch.group(0)! : '';
+
+    paragraphText =
+        paragraphText.replaceAll(spanStartTag, '').replaceAll(spanEndTag, '');
+
     final htmlStartIndex = mapPlainTextIndexToHtmlIndex(
       paragraphText,
       selectedStartIndex,
@@ -682,12 +669,27 @@ class _EpubViewState extends State<EpubView> {
       selectedEndIndex,
     );
 
-    final result = '${paragraphText.substring(0, htmlStartIndex)}'
-        '<$tag>${paragraphText.substring(htmlStartIndex, htmlEndIndex)}</$tag>'
-        '${paragraphText.substring(htmlEndIndex)}';
+    final formattedText = existingColorTagFormat(
+      beforeSelectedText: paragraphText.substring(0, htmlStartIndex),
+      selectedText: paragraphText.substring(htmlStartIndex, htmlEndIndex),
+      afterSelectedText: paragraphText.substring(htmlEndIndex),
+      tag: tag,
+    );
 
-    paragraphList.value[index] = '$initialTag$result$lastTag';
-    paragraphList.notifyListeners();
+    final formattedParagraph = '$initialTag'
+        '$spanStartTag'
+        '$formattedText'
+        '$spanEndTag'
+        '$lastTag';
+
+    if (html_parser.parse(formattedParagraph).outerHtml.isNotEmpty) {
+      paragraphList.value[index] = '$initialTag'
+          '$spanStartTag'
+          '$formattedText'
+          '$spanEndTag'
+          '$lastTag';
+      paragraphList.notifyListeners();
+    }
   }
 
   static int mapPlainTextIndexToHtmlIndex(String html, int plainTextIndex) {
@@ -707,5 +709,54 @@ class _EpubViewState extends State<EpubView> {
     }
 
     return htmlIndex;
+  }
+
+  static String existingColorTagFormat({
+    required String beforeSelectedText,
+    required String selectedText,
+    required String afterSelectedText,
+    required String tag,
+  }) {
+    String before = beforeSelectedText;
+    String selected = selectedText;
+    String after = afterSelectedText;
+
+    final openTagRegExp =
+    RegExp(r'<(tl(?:Blue|Green|Yellow|DarkBlue|DarkGreen|Orange))>');
+    final closeTagRegExp =
+    RegExp(r'</(tl(?:Blue|Green|Yellow|DarkBlue|DarkGreen|Orange))>');
+    final fullTagRegExp = RegExp(
+        r'<(tl(?:Blue|Green|Yellow|DarkBlue|DarkGreen|Orange))>(.*?)</\1>');
+
+    while (fullTagRegExp.hasMatch(selected)) {
+      final match = openTagRegExp.allMatches(selected).toList();
+      for (var element in match) {
+        final tag = element.group(1);
+        if (tag != null) {
+          selected =
+              selected.replaceAll('<$tag>', '').replaceAll('</$tag>', '');
+        }
+      }
+    }
+
+    if (openTagRegExp.hasMatch(selected)) {
+      final match = openTagRegExp.firstMatch(selected);
+      final tag = match?.group(1);
+      if (tag != null) {
+        after = '<$tag>$after';
+        selected = selected.replaceAll(match?.group(0) ?? '', '');
+      }
+    }
+
+    if (closeTagRegExp.hasMatch(selected)) {
+      final match = closeTagRegExp.firstMatch(selected);
+      final tag = match?.group(1);
+      if (tag != null) {
+        before = '$before</$tag>';
+        selected = selected.replaceAll(match?.group(0) ?? '', '');
+      }
+    }
+
+    return '$before<$tag>$selected</$tag>$after';
   }
 }

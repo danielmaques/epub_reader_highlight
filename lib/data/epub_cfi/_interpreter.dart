@@ -5,8 +5,6 @@ import '_parser.dart';
 class EpubCfiInterpreter {
   Element? searchLocalPathForHref(
       Element? htmlElement, CfiLocalPath localPathNode) {
-    // Interpret the first local_path node,
-    // which is a set of steps and and a terminus condition
     CfiStep nextStepNode;
     Element? currentElement = htmlElement;
 
@@ -25,7 +23,6 @@ class EpubCfiInterpreter {
 
   Element? interpretIndexStepNode(
       CfiStep? indexStepNode, Element? currentElement) {
-    // Check node type; throw error if wrong type
     if (indexStepNode == null || indexStepNode.type != 'indexStep') {
       throw Exception('$indexStepNode: expected index step node');
     }
@@ -33,12 +30,10 @@ class EpubCfiInterpreter {
     // Index step
     final stepTarget = _getNextNode(indexStepNode.stepLength, currentElement);
 
-    // Check the id assertion, if it exists
     if ((indexStepNode.idAssertion ?? '').isNotEmpty) {
       if (!_targetIdMatchesIdAssertion(
           stepTarget!, indexStepNode.idAssertion)) {
         throw Exception(
-            // ignore: lines_longer_than_80_chars
             '${indexStepNode.idAssertion}: ${stepTarget.attributes['id']} Id assertion failed');
       }
     }
@@ -48,22 +43,18 @@ class EpubCfiInterpreter {
 
   Element? interpretIndirectionStepNode(
       CfiStep? indirectionStepNode, Element? currentElement) {
-    // Check node type; throw error if wrong type
     if (indirectionStepNode == null ||
         indirectionStepNode.type != 'indirectionStep') {
       throw Exception('$indirectionStepNode: expected indirection step node');
     }
 
-    // Indirection step
     final stepTarget =
         _getNextNode(indirectionStepNode.stepLength, currentElement);
 
-    // Check the id assertion, if it exists
     if (indirectionStepNode.idAssertion != null) {
       if (!_targetIdMatchesIdAssertion(
           stepTarget!, indirectionStepNode.idAssertion)) {
         throw Exception(
-            // ignore: lines_longer_than_80_chars
             '${indirectionStepNode.idAssertion}: ${stepTarget.attributes['id']} Id assertion failed');
       }
     }
