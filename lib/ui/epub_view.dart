@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:epub_reader_highlight/data/models/selected_text_model.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart' as html_parser;
 import 'package:flutter_html/flutter_html.dart';
@@ -29,6 +30,8 @@ typedef ExternalLinkPressed = void Function(String href);
 class EpubView extends StatefulWidget {
   const EpubView({
     required this.controller,
+    this.onHighlightTap,
+    this.paragraphIndexOnDispose,
     this.onExternalLinkPressed,
     this.onChapterChanged,
     this.onDocumentLoaded,
@@ -47,6 +50,8 @@ class EpubView extends StatefulWidget {
   final void Function(EpubBook document)? onDocumentLoaded;
   final void Function(Exception? error)? onDocumentError;
   final EpubViewBuilders builders;
+  final Function(SelectedTextModel selectedTextModel)? onHighlightTap;
+  final Function(int paragraphIndex)? paragraphIndexOnDispose;
 
   @override
   State<EpubView> createState() => _EpubViewState();
@@ -61,8 +66,8 @@ class _EpubViewState extends State<EpubView> {
   EpubCfiReader? _epubCfiReader;
   EpubChapterViewValue? _currentValue;
   final _chapterIndexes = <int>[];
-  static ValueNotifier<List<String>> paragraphList =
-      ValueNotifier<List<String>>([]);
+  static final highlightedStream = ValueNotifier<SelectedTextModel?>(null);
+  static final paragraphList = ValueNotifier<List<String>>([]);
 
   EpubController get _controller => widget.controller;
 
@@ -72,6 +77,11 @@ class _EpubViewState extends State<EpubView> {
     _itemScrollController = ItemScrollController();
     _itemPositionListener = ItemPositionsListener.create();
     _controller._attach(this);
+    highlightedStream.addListener(() {
+      if (widget.onHighlightTap != null && highlightedStream.value != null) {
+        widget.onHighlightTap!(highlightedStream.value!);
+      }
+    });
     _controller.loadingState.addListener(() {
       switch (_controller.loadingState.value) {
         case EpubViewLoadingState.loading:
@@ -94,6 +104,11 @@ class _EpubViewState extends State<EpubView> {
   void dispose() {
     _itemPositionListener!.itemPositions.removeListener(_changeListener);
     _controller._detach();
+    if (widget.paragraphIndexOnDispose != null) {
+      widget.paragraphIndexOnDispose!(
+        _controller.currentValue!.paragraphNumber,
+      );
+    }
     super.dispose();
   }
 
@@ -340,137 +355,155 @@ class _EpubViewState extends State<EpubView> {
     List<Widget> toolbarSelectionActions(
         EditableTextState state, List<Color> options) {
       return [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Material(
-              borderRadius: BorderRadius.circular(50),
-              child: InkWell(
+        Padding(
+          padding: const EdgeInsets.all(6),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Material(
+                borderRadius: BorderRadius.circular(50),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(50),
+                  onTap: () {
+                    applyHighlight(
+                      state: state,
+                      index: index,
+                      tag: 'tgYellow',
+                    );
+                  },
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFFFF00),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ),
+              Material(
+                borderRadius: BorderRadius.circular(50),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(50),
+                  onTap: () {
+                    applyHighlight(
+                      state: state,
+                      index: index,
+                      tag: 'tgCyan',
+                    );
+                  },
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF00FFFF),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ),
+              Material(
+                borderRadius: BorderRadius.circular(50),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(50),
+                  onTap: () {
+                    applyHighlight(
+                      state: state,
+                      index: index,
+                      tag: 'tgPink',
+                    );
+                  },
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFF69B4),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ),
+              Material(
+                borderRadius: BorderRadius.circular(50),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(50),
+                  onTap: () {
+                    applyHighlight(
+                      state: state,
+                      index: index,
+                      tag: 'tgGreen',
+                    );
+                  },
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF90EE90),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ),
+              Material(
+                borderRadius: BorderRadius.circular(50),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(50),
+                  onTap: () {
+                    applyHighlight(
+                      state: state,
+                      index: index,
+                      tag: 'tgOrange',
+                    );
+                  },
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFFA07A),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ),
+              Material(
+                borderRadius: BorderRadius.circular(50),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(50),
+                  onTap: () {
+                    applyHighlight(
+                      state: state,
+                      index: index,
+                      tag: 'tgLilac',
+                    );
+                  },
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFDDA0DD),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
                   applyHighlight(
                     state: state,
                     index: index,
-                    tag: 'tgYellow',
+                    tag: null,
                   );
                 },
-                child: Container(
+                child: const SizedBox(
                   width: 20,
                   height: 20,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFFFF00),
-                    shape: BoxShape.circle,
-                  ),
+                  child: Icon(Icons.close),
                 ),
               ),
-            ),
-            Material(
-              borderRadius: BorderRadius.circular(50),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(50),
-                onTap: () {
-                  applyHighlight(
-                    state: state,
-                    index: index,
-                    tag: 'tgCyan',
-                  );
-                },
-                child: Container(
-                  width: 20,
-                  height: 20,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF00FFFF),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-            Material(
-              borderRadius: BorderRadius.circular(50),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(50),
-                onTap: () {
-                  applyHighlight(
-                    state: state,
-                    index: index,
-                    tag: 'tgPink',
-                  );
-                },
-                child: Container(
-                  width: 20,
-                  height: 20,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFF69B4),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-            Material(
-              borderRadius: BorderRadius.circular(50),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(50),
-                onTap: () {
-                  applyHighlight(
-                    state: state,
-                    index: index,
-                    tag: 'tgGreen',
-                  );
-                },
-                child: Container(
-                  width: 20,
-                  height: 20,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF90EE90),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-            Material(
-              borderRadius: BorderRadius.circular(50),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(50),
-                onTap: () {
-                  applyHighlight(
-                    state: state,
-                    index: index,
-                    tag: 'tgOrange',
-                  );
-                },
-                child: Container(
-                  width: 20,
-                  height: 20,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFFA07A),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-            Material(
-              borderRadius: BorderRadius.circular(50),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(50),
-                onTap: () {
-                  applyHighlight(
-                    state: state,
-                    index: index,
-                    tag: 'tgLilac',
-                  );
-                },
-                child: Container(
-                  width: 20,
-                  height: 20,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFDDA0DD),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ];
     }
@@ -628,7 +661,7 @@ class _EpubViewState extends State<EpubView> {
 
   static void applyHighlight({
     required EditableTextState state,
-    required String tag,
+    required String? tag,
     required int index,
   }) {
     String paragraphText = paragraphList.value[index];
@@ -654,7 +687,7 @@ class _EpubViewState extends State<EpubView> {
     final spanEndTagMatch = spanEndTagRegExp.firstMatch(paragraphText);
 
     final spanStartTag =
-    spanStartTagMatch != null ? spanStartTagMatch.group(0)! : '';
+        spanStartTagMatch != null ? spanStartTagMatch.group(0)! : '';
     final spanEndTag = spanEndTagMatch != null ? spanEndTagMatch.group(0)! : '';
 
     paragraphText =
@@ -683,11 +716,16 @@ class _EpubViewState extends State<EpubView> {
         '$lastTag';
 
     if (html_parser.parse(formattedParagraph).outerHtml.isNotEmpty) {
-      paragraphList.value[index] = '$initialTag'
-          '$spanStartTag'
-          '$formattedText'
-          '$spanEndTag'
-          '$lastTag';
+      paragraphList.value[index] = formattedParagraph;
+      highlightedStream.value = SelectedTextModel(
+        paragraphIndex: index,
+        tag: tag,
+        paragraphText: formattedParagraph,
+        selectedText: state.textEditingValue.selection.textInside(
+          state.textEditingValue.text,
+        ),
+      );
+      highlightedStream.notifyListeners();
       paragraphList.notifyListeners();
     }
   }
@@ -715,18 +753,30 @@ class _EpubViewState extends State<EpubView> {
     required String beforeSelectedText,
     required String selectedText,
     required String afterSelectedText,
-    required String tag,
+    required String? tag,
   }) {
     String before = beforeSelectedText;
     String selected = selectedText;
     String after = afterSelectedText;
 
     final openTagRegExp =
-    RegExp(r'<(tl(?:Blue|Green|Yellow|DarkBlue|DarkGreen|Orange))>');
+        RegExp(r'<(tg(?:Yellow|Cyan|Pink|Green|Orange|Lilac))>');
     final closeTagRegExp =
-    RegExp(r'</(tl(?:Blue|Green|Yellow|DarkBlue|DarkGreen|Orange))>');
-    final fullTagRegExp = RegExp(
-        r'<(tl(?:Blue|Green|Yellow|DarkBlue|DarkGreen|Orange))>(.*?)</\1>');
+        RegExp(r'</(tg(?:Yellow|Cyan|Pink|Green|Orange|Lilac))>');
+    final fullTagRegExp =
+        RegExp(r'<(tg(?:Yellow|Cyan|Pink|Green|Orange|Lilac))>(.*?)</\1>');
+
+    while (after.startsWith(closeTagRegExp)) {
+      final match = closeTagRegExp.firstMatch(after);
+      if (match != null) {
+        final tag = match.group(1);
+        if (tag != null) {
+          final closingTag = '</$tag>';
+          after = after.substring(closingTag.length);
+          selected = '$selected$closingTag';
+        }
+      }
+    }
 
     while (fullTagRegExp.hasMatch(selected)) {
       final match = openTagRegExp.allMatches(selected).toList();
@@ -757,6 +807,8 @@ class _EpubViewState extends State<EpubView> {
       }
     }
 
-    return '$before<$tag>$selected</$tag>$after';
+    return tag != null
+        ? '$before<$tag>$selected</$tag>$after'
+        : '$before$selected$after';
   }
 }
