@@ -1,6 +1,9 @@
 {
-  "projectName": "epub_reader_highlight",
-  "projectOwner": "danielmaques",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
   "contributors": [
     {
       "login": "danielmaques",
@@ -8,7 +11,7 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/76397634?v=4",
       "profile": "https://github.com/danielmaques",
       "contributions": [
-        "code", "doc"
+        "code", "doc", "review"
       ]
     },
     {
@@ -17,10 +20,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/109977155?v=4",
       "profile": "https://github.com/gabrielbmmaia",
       "contributions": [
-        "code"
+        "code", "review"
       ]
     }
-  ],
-  "repoType": "github",
-  "commitConvention": "angular"
+  ]
 }
