@@ -37,17 +37,11 @@ Here are some screenshots of EPub Reader Highlight in action:
 
 ### Text Highlight
 
-<p>
-    <img src="images/image1.png" alt="Text Highlight" width="250"/>
-    <img src="images/image2.png" alt="Text Highlight" width="250"/>
-</p>
+![image highlight](images/image01.png)
 
 ### Chapter List
 
-<p>
-    <img src="images/image3.png" alt="Chapter List" width="250"/>
-    <img src="images/image4.png" alt="Chapter List" width="250"/>
-</p>
+![image chapter](images/image02.png)
 
 ### Highlight Management
 
