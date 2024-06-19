@@ -177,6 +177,7 @@ Thanks to all the people who have contributed to this project. Without you, this
 
 <a href="https://github.com/danielmaques/epub_reader_highlight/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=danielmaques/epub_reader_highlight" />
+  <img src="https://contrib.rocks/image?repo=gabrielbmmaia/epub_reader_highlight" />
 </a>
 
 ## License
