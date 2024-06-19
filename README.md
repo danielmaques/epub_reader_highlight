@@ -179,8 +179,6 @@ Thanks to all the people who have contributed to this project. Without you, this
   <img src="https://contrib.rocks/image?repo=danielmaques/epub_reader_highlight" />
 </a>
 
-[Nome do Contribuidor](https://github.com/nome-do-contribuidor)
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
