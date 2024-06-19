@@ -175,10 +175,8 @@ Be sure to include a tag and follow [Conventional Commits](https://www.conventio
 
 Thanks to all the people who have contributed to this project. Without you, this project would not be possible.
 
-<a href="https://github.com/danielmaques/epub_reader_highlight/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=danielmaques/epub_reader_highlight" />
-  <img src="https://contrib.rocks/image?repo=gabrielbmmaia/epub_reader_highlight" />
-</a>
+| [<img src="https://avatars.githubusercontent.com/u/76397634?v=4" width=115><br><sub>Daniel Marques</sub>](https://github.com/danielmaques) |  [<img src="https://avatars.githubusercontent.com/u/109977155?v=4" width=115><br><sub>Gabriel Barreto Matos Maia</sub>](https://github.com/gabrielbmmaia)  |
+| :---: | :---: 
 
 ## License
 
