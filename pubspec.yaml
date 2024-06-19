@@ -1,6 +1,6 @@
 name: epub_reader_highlight
 description: A Flutter package for highlighting and manipulating text in EPUB files. It provides functionalities to apply different color highlights, map text indices, and format HTML tags.
-version: 1.0.0-beta.1
+version: 1.0.0-beta.3
 homepage: https://github.com/danielmaques/epub_reader_highlight
 
 environment:
