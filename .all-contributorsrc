@@ -1,0 +1,26 @@
+{
+  "projectName": "epub_reader_highlight",
+  "projectOwner": "danielmaques",
+  "contributors": [
+    {
+      "login": "danielmaques",
+      "name": "Daniel Marques",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76397634?v=4",
+      "profile": "https://github.com/danielmaques",
+      "contributions": [
+        "code", "doc"
+      ]
+    },
+    {
+      "login": "gabrielbmmaia",
+      "name": "Gabriel Maia",
+      "avatar_url": "https://avatars.githubusercontent.com/u/109977155?v=4",
+      "profile": "https://github.com/gabrielbmmaia",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "repoType": "github",
+  "commitConvention": "angular"
+}
