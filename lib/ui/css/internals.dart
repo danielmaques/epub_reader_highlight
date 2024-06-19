@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, depend_on_referenced_packages
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -152,11 +152,10 @@ class Parser {
           top = _stack.removeLast();
         }
         if (top.name != event.name) {
-          print("Malformed HTML");
           return;
         }
         if (event.name == "p") {
-          spans.add(TextSpan(text: "\n"));
+          spans.add(const TextSpan(text: "\n"));
         }
       }
 

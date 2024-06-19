@@ -101,7 +101,7 @@ class EpubController {
       var epubBook = await EpubReader.readBook(file.readAsBytesSync());
       loadDocument(Future.value(epubBook));
     } catch (e) {
-      print("Failed to load document: $e");
+      debugPrint("Failed to load document: $e");
     }
   }
 

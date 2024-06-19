@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
@@ -13,8 +15,8 @@ class TextGenUtils {
       hasSpaceAfter = true;
     }
     text = text.trim();
-    if (hasSpaceBefore) text = " " + text;
-    if (hasSpaceAfter) text = text + " ";
+    if (hasSpaceBefore) text = " $text";
+    if (hasSpaceAfter) text = "$text ";
     return text;
   }
 
@@ -26,7 +28,7 @@ class TextGenUtils {
 
 class StyleGenUtils {
   static TextStyle addFontWeight(TextStyle textStyle, String value) {
-    final List<String> _supportedNumValues = [
+    final List<String> supportedNumValues = [
       "100",
       "200",
       "300",
@@ -37,9 +39,9 @@ class StyleGenUtils {
       "800",
       "900"
     ];
-    if (_supportedNumValues.contains(value)) {
+    if (supportedNumValues.contains(value)) {
       return textStyle.copyWith(
-          fontWeight: FontWeight.values[_supportedNumValues.indexOf(value)]);
+          fontWeight: FontWeight.values[supportedNumValues.indexOf(value)]);
     }
     switch (value) {
       case "normal":
@@ -57,9 +59,9 @@ class StyleGenUtils {
   static int _convertColor(String value) {
     var colorHex = 0xff000000;
     if (value.startsWith("#")) {
-      if (value.length == 7)
+      if (value.length == 7) {
         colorHex = int.parse(value.replaceAll(r"#", "0xff"));
-      else if (value.length == 9)
+      } else if (value.length == 9)
         colorHex = int.parse(value.replaceAll(r"#", "0x"));
       else if (value.length == 4) {
         value = value.replaceFirst(r"#", "");

@@ -60,10 +60,10 @@ class _MainAppState extends State<MainApp> {
                 chapterDividerBuilder: (_) => Container(),
               ),
               onHighlightTap: (selectedTextModel) {
-                print('Highlighted Text: $selectedTextModel');
+                debugPrint('Highlighted Text: $selectedTextModel');
               },
               paragraphIndexOnDispose: (paragraphIndex) {
-                print('Last paragraph Index: $paragraphIndex');
+                debugPrint('Last paragraph Index: $paragraphIndex');
               },
               controller: _epubReaderController,
             ),
