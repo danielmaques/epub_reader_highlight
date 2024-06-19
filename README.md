@@ -29,6 +29,7 @@ EPub Reader Highlight is a Flutter application that offers a complete solution f
 - **Chapter List:** Easily navigate between the book's chapters, viewing the title and number of each one.
 - **Highlight Management:** Access an organized list of all added highlights, with the option to filter by color or chapter.
 - **Customizable Interface:** Adapt the reader's appearance to your preferences, with options to adjust font size, line spacing, and reading mode.
+- **Last Paragraph Access:** Access the last paragraph read in the book and manage the text selected for highlights, allowing developers to save and manage the reading progress and selected text as desired.
 
 ## Screenshots
 
@@ -50,7 +51,7 @@ Here are some screenshots of EPub Reader Highlight in action:
 
 ### Highlight Management
 
-<img src="images/highlight_management.png" alt="Highlight Management" width="250"/>
+<img src="images/code.png" alt="Highlight Management" width="600"/>
 
 ## Usage
 
@@ -145,6 +146,16 @@ class _MainAppState extends State<MainApp> {
     ),
 ```
 - **Interface Customization:** Access the app settings to adjust the font, spacing, and reading mode.
+- **Last Paragraph Access:** 
+```dart
+
+    onHighlightTap: (selectedTextModel) {
+        print('Highlighted Text: $selectedTextModel');
+    },
+    paragraphIndexOnDispose: (paragraphIndex) {
+        print('Last paragraph Index: $paragraphIndex');
+    },
+```
 
 ## Contributing
 

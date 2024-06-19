@@ -1,7 +1,7 @@
 name: epub_reader_highlight
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
+homepage: https://github.com/danielmaques/epub_reader_highlight
 
 environment:
   sdk: '>=3.3.0 <4.0.0'

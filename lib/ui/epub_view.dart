@@ -4,8 +4,8 @@ import 'dart:typed_data';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_reader_highlight/data/models/selected_text_model.dart';
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart' as html_parser;
 import 'package:flutter_html/flutter_html.dart';
+import 'package:html/parser.dart' as html_parser;
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:universal_file/universal_file.dart';
 
@@ -19,7 +19,6 @@ import 'css/html_stylist.dart';
 export 'package:epubx/epubx.dart' hide Image;
 
 part '../helpers/epub_view_builders.dart';
-
 part 'controller/epub_controller.dart';
 
 const _minTrailingEdge = 0.55;
@@ -487,19 +486,18 @@ class _EpubViewState extends State<EpubView> {
                   ),
                 ),
               ),
-              InkWell(
+              Material(
                 borderRadius: BorderRadius.circular(50),
-                onTap: () {
-                  applyHighlight(
-                    state: state,
-                    index: index,
-                    tag: null,
-                  );
-                },
-                child: const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: Icon(Icons.close),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(50),
+                  onTap: () {
+                    applyHighlight(
+                      state: state,
+                      index: index,
+                      tag: null,
+                    );
+                  },
+                  child: const Icon(Icons.close),
                 ),
               ),
             ],

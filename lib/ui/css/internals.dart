@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:xml/xml_events.dart' as xmle;
@@ -16,13 +18,11 @@ void defaultLinksCallback(String link) {}
 class Parser {
   final _stack = [];
   var _events;
-  late BuildContext _context;
   late Function _linksCallback;
 
   Parser(BuildContext context, String data,
       {Function linksCallback = defaultLinksCallback}) {
     _events = xmle.parseEvents(data);
-    _context = context;
     _linksCallback = linksCallback;
   }
 
