@@ -147,12 +147,16 @@ class Parser {
       }
 
       if (event is xmle.XmlEndElementEvent) {
-        var top = _stack.removeLast();
+        dynamic top;
+        if (_stack.isNotEmpty) {
+          top = _stack.removeLast();
+        }
         if (top.name != event.name) {
+          print("Malformed HTML");
           return;
         }
         if (event.name == "p") {
-          spans.add(const TextSpan(text: "\n"));
+          spans.add(TextSpan(text: "\n"));
         }
       }
 
