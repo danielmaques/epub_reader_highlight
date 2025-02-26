@@ -59,12 +59,20 @@ class _MainAppState extends State<MainApp> {
                 ),
                 chapterDividerBuilder: (_) => Container(),
               ),
-              onHighlightTap: (selectedTextModel) {
-                debugPrint('Highlighted Text: $selectedTextModel');
+              onHighlightTap: (callback) {
+                debugPrint('Highlighted Text: $callback');
               },
               paragraphIndexOnDispose: (paragraphIndex) {
                 debugPrint('Last paragraph Index: $paragraphIndex');
               },
+              // replacedParagraphs: const [
+              //   SelectedTextModel(
+              //     paragraphIndex: 2,
+              //     tag: 'tgGreen',
+              //     selectedText: '<p><tgGreen>Example</tgGreen> text</p>',
+              //     paragraphText: '',
+              //   ),
+              // ],
               controller: _epubReaderController,
             ),
           ),

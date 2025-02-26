@@ -21,6 +21,7 @@ import 'css/html_stylist.dart';
 export 'package:epubx/epubx.dart' hide Image;
 
 part '../helpers/epub_view_builders.dart';
+
 part 'controller/epub_controller.dart';
 
 const _minTrailingEdge = 0.55;
@@ -41,6 +42,7 @@ class EpubView extends StatefulWidget {
       options: DefaultBuilderOptions(),
     ),
     this.shrinkWrap = false,
+    this.replacedParagraphs,
     super.key,
   });
 
@@ -51,8 +53,9 @@ class EpubView extends StatefulWidget {
   final void Function(EpubBook document)? onDocumentLoaded;
   final void Function(Exception? error)? onDocumentError;
   final EpubViewBuilders builders;
-  final Function(SelectedTextModel selectedTextModel)? onHighlightTap;
+  final Function(SelectedTextModel callback)? onHighlightTap;
   final Function(int paragraphIndex)? paragraphIndexOnDispose;
+  final List<SelectedTextModel>? replacedParagraphs;
 
   @override
   State<EpubView> createState() => _EpubViewState();
@@ -123,8 +126,13 @@ class _EpubViewState extends State<EpubView> {
         parseParagraphs(_chapters, _controller._document!.Content);
     _paragraphs = parseParagraphsResult.flatParagraphs;
     _chapterIndexes.addAll(parseParagraphsResult.chapterIndexes);
+    final list = _paragraphs.map((e) => e.element.outerHtml).toList();
 
-    paragraphList.value = _paragraphs.map((e) => e.element.outerHtml).toList();
+    for (SelectedTextModel element in widget.replacedParagraphs ?? []) {
+      list[element.paragraphIndex] = element.selectedText;
+    }
+
+    paragraphList.value = list;
 
     _epubCfiReader = EpubCfiReader.parser(
       cfiInput: _controller.epubCfi,
